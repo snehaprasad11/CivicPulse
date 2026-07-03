@@ -16,6 +16,9 @@
 - GitHub Actions CI for backend and frontend
 - Demo scenario and generated MP4 walkthrough
 - Render and Vercel deployment configuration
+- README screenshots captured from the running app
+- Reproducible API proof artifacts in `docs/proofs/`
+- Project readiness report in `docs/PROJECT_READINESS.md`
 
 ## Ready But Requires Account Credentials
 
@@ -24,6 +27,7 @@
 - Supabase persistence: requires a Supabase project URL and service-role key.
 - Ollama summary generation in production: requires an Ollama host or compatible local LLM endpoint.
 - Final `.pbix` export: requires opening Power BI Desktop and saving the report after applying `powerbi/CivicPulse_Dashboard_Build_Guide.md`.
+- Public deployment URLs: requires successful Render and Vercel setup.
 
 ## Recommended Submission Order
 
@@ -34,3 +38,4 @@
 5. Run `docs/SUPABASE_SCHEMA.sql` in Supabase and add backend env vars.
 6. Publish `notebooks/civicpulse_kaggle_starter.ipynb` with a public dataset result.
 7. Include `demo/civicpulse_demo.mp4` in the project presentation.
+8. Generate and attach the Power BI `.pbix` after completing the desktop build guide.

@@ -1,0 +1,21 @@
+{
+  "benchmark_models": [
+    "Logistic regression",
+    "XGBoost",
+    "PyTorch adversarial debiasing"
+  ],
+  "dataset_rows": 24,
+  "demographic_parity_difference": 0.6666666666666667,
+  "disparate_impact_ratio": 0.3333333333333333,
+  "equal_opportunity_difference": 0.0,
+  "generated_at": "2026-07-03T11:54:45.772356+00:00",
+  "plain_english_summary": "Across district, North receives the highest positive decision rate (100.0%) while South receives the lowest (33.3%). The disparate impact ratio is 0.33; values below 0.80 are commonly treated as a warning sign for adverse impact. The largest observed feature gap is years_in_city, so analysts should inspect whether that feature is a valid policy criterion or a proxy for neighborhood disadvantage.",
+  "proof_files": [
+    "health.json",
+    "sample_audit_district.json",
+    "sample_benchmark.json",
+    "group_metrics_export.csv",
+    "mitigation_results_export.csv"
+  ],
+  "protected_attribute": "district"
+}

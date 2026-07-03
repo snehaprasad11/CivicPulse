@@ -20,6 +20,25 @@ The repository also includes a generated walkthrough video for a housing-assista
 
 ![Demo video thumbnail](docs/assets/demo-video-thumbnail.png)
 
+## Verification Proofs
+
+The repo includes reproducible proof artifacts generated from the FastAPI app:
+
+- [Proof summary](docs/proofs/proof_summary.json)
+- [Sample district fairness audit](docs/proofs/sample_audit_district.json)
+- [Model benchmark output](docs/proofs/sample_benchmark.json)
+- [Power BI group metrics export](docs/proofs/group_metrics_export.csv)
+- [Power BI mitigation export](docs/proofs/mitigation_results_export.csv)
+- [Project readiness report](docs/PROJECT_READINESS.md)
+
+Regenerate the proof snapshot with:
+
+```bash
+python scripts/generate_proof_artifacts.py
+```
+
+Current sample finding: the district audit reports a disparate impact ratio of `0.33`, with South receiving a `33.3%` positive decision rate and North receiving `100.0%`.
+
 ## Implemented Scope
 
 - React + Tailwind PWA dashboard connected to the FastAPI backend.
@@ -31,6 +50,15 @@ The repository also includes a generated walkthrough video for a housing-assista
 - Power BI build kit: export endpoints, sample CSVs, DAX measures, Power Query scripts, schema, and report layout guide.
 - Kaggle starter notebook and public OpenML German Credit data preparation script.
 - GitHub Actions CI for backend tests and frontend build checks.
+
+## Skills Demonstrated
+
+- Deep learning: PyTorch adversarial debiasing architecture and model benchmark.
+- Fairness-aware ML: disparate impact, demographic parity, equal opportunity, and equalized odds implemented from first principles.
+- Data science: dataset normalization, group-level metric analysis, mitigation trade-off comparison, and CSV dashboard exports.
+- Explainable AI: SHAP/LIME-style feature-gap explanations and analyst-readable summaries.
+- Full-stack engineering: FastAPI, React, Tailwind, PWA setup, API contracts, tests, CI, Render/Vercel configuration.
+- Decision-support design: a policy analyst can inspect model behavior without reading Python notebooks.
 
 ## What It Does
 
@@ -78,8 +106,8 @@ uvicorn app.main:app --reload --port 8000
 
 ```bash
 cd frontend
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 The frontend expects the API at `http://localhost:8000`.
@@ -116,3 +144,7 @@ The `demo/` folder includes a housing-assistance audit scenario, voiceover scrip
 ```bash
 python scripts/generate_demo_video.py
 ```
+
+## Power BI Status
+
+CivicPulse includes a Power BI build kit with API export endpoints, sample CSVs, DAX measures, Power Query scripts, schema, and a layout guide. The saved `.pbix` file is intentionally not claimed in this repository until it is created in Power BI Desktop from `powerbi/CivicPulse_Dashboard_Build_Guide.md`.

@@ -1,0 +1,5 @@
+audit_id,protected_attribute,group,count,selection_rate,true_positive_rate,false_positive_rate,accuracy
+47dbd7f1-041e-40be-b78e-a8fd56bf6e00,district,East,6,0.8333333333333334,1.0,0.0,1.0
+47dbd7f1-041e-40be-b78e-a8fd56bf6e00,district,North,6,1.0,1.0,,1.0
+47dbd7f1-041e-40be-b78e-a8fd56bf6e00,district,South,6,0.3333333333333333,1.0,0.0,1.0
+47dbd7f1-041e-40be-b78e-a8fd56bf6e00,district,West,6,0.5,1.0,0.0,1.0
