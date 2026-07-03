@@ -73,6 +73,14 @@ For a publishable Kaggle version, replace it with a public dataset such as HMDA 
 
 Use `scripts/prepare_public_dataset.py` to normalize a public CSV into the columns CivicPulse expects.
 
+## Demo
+
+The `demo/` folder includes a housing-assistance audit scenario, voiceover script, and short generated walkthrough video.
+
+```bash
+python scripts/generate_demo_video.py
+```
+
 ## Resume Line
 
 Built a model-agnostic algorithmic fairness auditing platform combining custom fairness-metric implementations, SHAP-based explainability, and an adversarial-debiasing neural network, enabling non-technical stakeholders to detect and mitigate bias in public resource-allocation models via an interactive web app.

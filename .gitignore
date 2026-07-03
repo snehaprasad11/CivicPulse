@@ -19,6 +19,7 @@ dist/
 *.joblib
 *.pt
 *.onnx
+demo/frames/
 
 # OS
 .DS_Store
