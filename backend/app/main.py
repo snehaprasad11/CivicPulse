@@ -2,7 +2,7 @@ import io
 import pickle
 
 import pandas as pd
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 
@@ -51,10 +51,10 @@ def run_audit(request: AuditRequest, persist: bool = False) -> AuditResponse:
 @app.post("/audit/upload", response_model=AuditResponse)
 async def run_uploaded_audit(
     file: UploadFile = File(...),
-    target: str = "approved",
-    protected_attribute: str = "district",
-    score_column: str | None = "model_score",
-    positive_label: int = 1,
+    target: str = Form("approved"),
+    protected_attribute: str = Form("district"),
+    score_column: str | None = Form("model_score"),
+    positive_label: int = Form(1),
 ) -> AuditResponse:
     if not file.filename or not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Upload a CSV file.")
@@ -73,9 +73,9 @@ async def run_uploaded_audit(
 async def run_uploaded_model_audit(
     dataset: UploadFile = File(...),
     model_file: UploadFile = File(...),
-    target: str = "approved",
-    protected_attribute: str = "district",
-    positive_label: int = 1,
+    target: str = Form("approved"),
+    protected_attribute: str = Form("district"),
+    positive_label: int = Form(1),
 ) -> AuditResponse:
     if not dataset.filename or not dataset.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Dataset must be a CSV file.")

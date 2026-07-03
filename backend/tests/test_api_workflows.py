@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 
 from app.main import app
+from app.services.audit_service import load_sample_dataset
 
 
 client = TestClient(app)
@@ -22,6 +23,23 @@ def test_powerbi_group_metrics_export() -> None:
     assert response.status_code == 200
     assert "group,count,selection_rate" in response.text
     assert "South,6,0.3333333333333333" in response.text
+
+
+def test_csv_upload_respects_form_fields() -> None:
+    csv_bytes = load_sample_dataset().to_csv(index=False).encode()
+
+    response = client.post(
+        "/audit/upload",
+        files={"file": ("sample.csv", csv_bytes, "text/csv")},
+        data={
+            "target": "approved",
+            "protected_attribute": "income_band",
+            "score_column": "model_score",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json()["protected_attribute"] == "income_band"
 
 
 def test_sample_benchmark_endpoint_compares_core_models() -> None:
