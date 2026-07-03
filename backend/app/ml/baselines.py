@@ -25,7 +25,7 @@ def train_logistic_baseline(df: pd.DataFrame, target: str) -> Pipeline:
     model = Pipeline(
         steps=[
             ("preprocess", build_preprocessor(df, target)),
-            ("classifier", LogisticRegression(max_iter=1000)),
+            ("classifier", LogisticRegression(max_iter=1000, solver="liblinear")),
         ]
     )
     return model.fit(df.drop(columns=[target]), df[target])

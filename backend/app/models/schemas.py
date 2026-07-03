@@ -42,6 +42,7 @@ class ExplanationItem(BaseModel):
 
 
 class AuditResponse(BaseModel):
+    audit_id: str
     dataset_rows: int
     protected_attribute: str
     target: str
@@ -49,3 +50,20 @@ class AuditResponse(BaseModel):
     mitigation: list[MitigationResult]
     explanations: list[ExplanationItem]
     plain_english_summary: str
+    persisted: bool = False
+
+
+class BenchmarkMetric(BaseModel):
+    model_name: str
+    accuracy: float
+    disparate_impact_ratio: float | None
+    demographic_parity_difference: float
+    equal_opportunity_difference: float | None
+    notes: str
+
+
+class BenchmarkResponse(BaseModel):
+    dataset_rows: int
+    protected_attribute: str
+    target: str
+    results: list[BenchmarkMetric]

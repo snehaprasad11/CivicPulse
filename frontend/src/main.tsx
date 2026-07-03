@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Activity, AlertTriangle, BarChart3, FileUp, Gauge, Scale } from "lucide-react";
+import { Activity, AlertTriangle, BarChart3, Download, FileUp, Gauge, Scale } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -31,6 +31,7 @@ type MitigationResult = {
 };
 
 type AuditResponse = {
+  audit_id: string;
   dataset_rows: number;
   protected_attribute: string;
   target: string;
@@ -45,6 +46,17 @@ type AuditResponse = {
   mitigation: MitigationResult[];
   explanations: { feature: string; impact: number; direction: string }[];
   plain_english_summary: string;
+};
+
+type BenchmarkResponse = {
+  results: {
+    model_name: string;
+    accuracy: number;
+    disparate_impact_ratio: number | null;
+    demographic_parity_difference: number;
+    equal_opportunity_difference: number | null;
+    notes: string;
+  }[];
 };
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
@@ -80,8 +92,10 @@ function MetricTile({
 function App() {
   const [audit, setAudit] = React.useState<AuditResponse | null>(null);
   const [protectedAttribute, setProtectedAttribute] = React.useState("district");
+  const [benchmark, setBenchmark] = React.useState<BenchmarkResponse | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   async function runAudit(attribute = protectedAttribute) {
     setLoading(true);
@@ -101,8 +115,41 @@ function App() {
     }
   }
 
+  async function runBenchmark(attribute = protectedAttribute) {
+    try {
+      const response = await fetch(`${API_URL}/benchmark/sample?protected_attribute=${attribute}`);
+      if (response.ok) setBenchmark(await response.json());
+    } catch {
+      setBenchmark(null);
+    }
+  }
+
+  async function uploadCsv(file: File) {
+    setLoading(true);
+    setError(null);
+    const form = new FormData();
+    form.append("file", file);
+    form.append("protected_attribute", protectedAttribute);
+    form.append("target", "approved");
+    form.append("score_column", "model_score");
+    try {
+      const response = await fetch(`${API_URL}/audit/upload`, {
+        method: "POST",
+        body: form
+      });
+      if (!response.ok) throw new Error(await response.text());
+      setAudit(await response.json());
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to upload CSV");
+    } finally {
+      setLoading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }
+
   React.useEffect(() => {
     runAudit("district");
+    runBenchmark("district");
   }, []);
 
   const chartRows =
@@ -141,6 +188,7 @@ function App() {
                 onClick={() => {
                   setProtectedAttribute(attribute);
                   runAudit(attribute);
+                  runBenchmark(attribute);
                 }}
               >
                 {attribute.replace("_", " ")}
@@ -149,11 +197,22 @@ function App() {
             <button
               className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700"
               type="button"
-              title="CSV upload endpoint is available in the API"
+              title="Upload a CSV with approved, model_score, and protected-attribute columns"
+              onClick={() => fileInputRef.current?.click()}
             >
               <FileUp size={16} />
               CSV
             </button>
+            <input
+              ref={fileInputRef}
+              className="hidden"
+              type="file"
+              accept=".csv"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                if (file) uploadCsv(file);
+              }}
+            />
           </div>
         </div>
       </header>
@@ -264,6 +323,57 @@ function App() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="mt-6 rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-2">
+              <Scale size={18} />
+              <h2 className="text-lg font-semibold">Model Benchmark</h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <a
+                className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700"
+                href={`${API_URL}/exports/group-metrics.csv?protected_attribute=${protectedAttribute}`}
+              >
+                <Download size={16} />
+                Groups
+              </a>
+              <a
+                className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700"
+                href={`${API_URL}/exports/mitigation-results.csv?protected_attribute=${protectedAttribute}`}
+              >
+                <Download size={16} />
+                Mitigation
+              </a>
+            </div>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="border-b text-left text-slate-500">
+                  <th className="py-2">Model</th>
+                  <th className="py-2">Accuracy</th>
+                  <th className="py-2">Disparate Impact</th>
+                  <th className="py-2">Parity Gap</th>
+                  <th className="py-2">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {benchmark?.results.map((item) => (
+                  <tr key={item.model_name} className="border-b border-slate-100">
+                    <td className="py-3 pr-3 font-medium">{item.model_name}</td>
+                    <td className="py-3">{percent(item.accuracy)}</td>
+                    <td className="py-3">
+                      {item.disparate_impact_ratio === null ? "n/a" : item.disparate_impact_ratio.toFixed(2)}
+                    </td>
+                    <td className="py-3">{percent(item.demographic_parity_difference)}</td>
+                    <td className="py-3 text-slate-600">{item.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
       </div>

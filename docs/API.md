@@ -35,3 +35,29 @@ Multipart form fields:
 - `protected_attribute`: group column to audit
 - `score_column`: model score column
 - `positive_label`: positive decision label
+
+## `POST /audit/model-upload`
+
+Runs an audit using an uploaded CSV and serialized model.
+
+Multipart form fields:
+
+- `dataset`: CSV file
+- `model_file`: `.pkl`, `.pickle`, or `.joblib` model
+- `target`: target label column
+- `protected_attribute`: group column to audit
+- `positive_label`: positive decision label
+
+The model must expose `predict_proba`, `decision_function`, or `predict`.
+
+## `GET /benchmark/sample`
+
+Compares logistic regression, XGBoost, and PyTorch adversarial debiasing on the sample dataset.
+
+## `GET /exports/group-metrics.csv`
+
+Exports group-level fairness metrics for Power BI.
+
+## `GET /exports/mitigation-results.csv`
+
+Exports mitigation simulation rows for Power BI.
