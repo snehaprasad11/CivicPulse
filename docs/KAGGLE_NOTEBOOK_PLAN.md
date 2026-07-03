@@ -22,3 +22,14 @@ Title: Auditing Algorithmic Fairness in Public Resource Allocation
 - Public benefit eligibility or lending-adjacent datasets with documented protected attributes
 
 Avoid using sensitive real applicant data unless it is explicitly public, anonymized, and permitted for analysis.
+
+## CivicPulse Reproducibility Contract
+
+Your final Kaggle notebook should output these tables:
+
+- `group_metrics.csv`
+- `mitigation_results.csv`
+- `model_benchmark.csv`
+- `feature_explanations.csv`
+
+These map directly to the FastAPI response and Power BI dashboard schema.

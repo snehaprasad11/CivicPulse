@@ -1,0 +1,5 @@
+protected_attribute,group,count,selection_rate,true_positive_rate,false_positive_rate,accuracy
+district,East,6,0.8333333333333334,1.0,0.0,1.0
+district,North,6,1.0,1.0,,1.0
+district,South,6,0.3333333333333333,1.0,0.0,1.0
+district,West,6,0.5,1.0,0.0,1.0

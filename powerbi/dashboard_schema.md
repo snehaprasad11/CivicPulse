@@ -30,3 +30,10 @@ Use the API response or exported CSVs to build these visuals.
 - Matrix: before/after mitigation comparison
 - Slicer: protected attribute
 - Text box: plain-English finding
+
+## Included Samples
+
+- `group_metrics_sample.csv`
+- `mitigation_results_sample.csv`
+
+In Power BI, import both CSVs and relate them on `protected_attribute`. For live dashboards, use the backend export URLs as web data sources.
