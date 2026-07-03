@@ -1,0 +1,35 @@
+{
+  "name": "CivicPulse Fairness Dashboard",
+  "pages": [
+    {
+      "name": "City Fairness Overview",
+      "visuals": [
+        "KPI: Disparate Impact Ratio",
+        "KPI: Demographic Parity Gap",
+        "KPI: Equal Opportunity Gap",
+        "Clustered column chart: selection_rate and accuracy by group",
+        "Table: group metrics",
+        "Slicer: protected_attribute"
+      ]
+    },
+    {
+      "name": "Mitigation Comparison",
+      "visuals": [
+        "Matrix: strategy comparison",
+        "Bar chart: demographic parity difference by strategy",
+        "Bar chart: accuracy by strategy",
+        "Table: mitigation notes"
+      ]
+    },
+    {
+      "name": "Analyst Brief",
+      "visuals": [
+        "KPI: lowest selection rate",
+        "KPI: highest selection rate",
+        "KPI: adverse impact flag",
+        "Sorted group metrics table",
+        "Policy caveats text box"
+      ]
+    }
+  ]
+}

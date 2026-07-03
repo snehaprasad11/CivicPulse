@@ -18,3 +18,11 @@ python scripts/prepare_public_dataset.py \
   --protected-attribute district_column \
   --score-column probability_column
 ```
+
+For a quick public-data artifact, run:
+
+```bash
+python scripts/fetch_openml_credit_dataset.py
+```
+
+This fetches OpenML `credit-g` and writes `data/public_credit_fairness.csv`.

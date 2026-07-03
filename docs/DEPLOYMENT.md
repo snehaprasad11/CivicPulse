@@ -1,5 +1,7 @@
 # Deployment
 
+Deployment configs are included, but actual deployment requires access to the user's Render, Vercel, and Supabase accounts.
+
 ## Backend on Render
 
 1. Create a Render web service from this repository.
@@ -49,6 +51,14 @@ dist
 ## Supabase Table
 
 Run the SQL in `docs/SUPABASE_SCHEMA.sql`, then set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in Render.
+
+## Current Readiness
+
+- GitHub Actions CI is configured for backend and frontend.
+- `render.yaml` is ready for Render.
+- `frontend/vercel.json` is ready for Vercel.
+- `docs/SUPABASE_SCHEMA.sql` is ready for Supabase.
+- Account-specific deployment must be completed after logging into those services.
 
 ## Ollama Summary Layer
 

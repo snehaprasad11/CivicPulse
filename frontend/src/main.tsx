@@ -96,6 +96,9 @@ function App() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+  const modelDatasetInputRef = React.useRef<HTMLInputElement | null>(null);
+  const modelFileInputRef = React.useRef<HTMLInputElement | null>(null);
+  const pendingModelDatasetRef = React.useRef<File | null>(null);
 
   async function runAudit(attribute = protectedAttribute) {
     setLoading(true);
@@ -144,6 +147,31 @@ function App() {
     } finally {
       setLoading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }
+
+  async function uploadModelAudit(dataset: File, modelFile: File) {
+    setLoading(true);
+    setError(null);
+    const form = new FormData();
+    form.append("dataset", dataset);
+    form.append("model_file", modelFile);
+    form.append("protected_attribute", protectedAttribute);
+    form.append("target", "approved");
+    try {
+      const response = await fetch(`${API_URL}/audit/model-upload`, {
+        method: "POST",
+        body: form
+      });
+      if (!response.ok) throw new Error(await response.text());
+      setAudit(await response.json());
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to audit uploaded model");
+    } finally {
+      setLoading(false);
+      pendingModelDatasetRef.current = null;
+      if (modelDatasetInputRef.current) modelDatasetInputRef.current.value = "";
+      if (modelFileInputRef.current) modelFileInputRef.current.value = "";
     }
   }
 
@@ -211,6 +239,39 @@ function App() {
               onChange={(event) => {
                 const file = event.target.files?.[0];
                 if (file) uploadCsv(file);
+              }}
+            />
+            <button
+              className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700"
+              type="button"
+              title="Upload a CSV dataset, then a .pkl, .pickle, or .joblib model"
+              onClick={() => modelDatasetInputRef.current?.click()}
+            >
+              <FileUp size={16} />
+              Model
+            </button>
+            <input
+              ref={modelDatasetInputRef}
+              className="hidden"
+              type="file"
+              accept=".csv"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                if (file) {
+                  pendingModelDatasetRef.current = file;
+                  modelFileInputRef.current?.click();
+                }
+              }}
+            />
+            <input
+              ref={modelFileInputRef}
+              className="hidden"
+              type="file"
+              accept=".pkl,.pickle,.joblib"
+              onChange={(event) => {
+                const modelFile = event.target.files?.[0];
+                const dataset = pendingModelDatasetRef.current;
+                if (dataset && modelFile) uploadModelAudit(dataset, modelFile);
               }}
             />
           </div>

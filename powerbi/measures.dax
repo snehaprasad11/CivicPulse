@@ -1,0 +1,40 @@
+Disparate Impact Ratio =
+VAR MinSelection =
+    MINX ( group_metrics, group_metrics[selection_rate] )
+VAR MaxSelection =
+    MAXX ( group_metrics, group_metrics[selection_rate] )
+RETURN
+    DIVIDE ( MinSelection, MaxSelection )
+
+Demographic Parity Gap =
+MAXX ( group_metrics, group_metrics[selection_rate] )
+    - MINX ( group_metrics, group_metrics[selection_rate] )
+
+Equal Opportunity Gap =
+MAXX ( group_metrics, group_metrics[true_positive_rate] )
+    - MINX ( group_metrics, group_metrics[true_positive_rate] )
+
+Lowest Selection Rate =
+MINX ( group_metrics, group_metrics[selection_rate] )
+
+Highest Selection Rate =
+MAXX ( group_metrics, group_metrics[selection_rate] )
+
+Adverse Impact Flag =
+IF ( [Disparate Impact Ratio] < 0.8, "Review Needed", "Within Threshold" )
+
+Average Accuracy =
+AVERAGE ( group_metrics[accuracy] )
+
+Best Mitigation Strategy =
+VAR RankedStrategies =
+    TOPN (
+        1,
+        mitigation_results,
+        mitigation_results[demographic_parity_difference],
+        ASC,
+        mitigation_results[accuracy],
+        DESC
+    )
+RETURN
+    CONCATENATEX ( RankedStrategies, mitigation_results[strategy], ", " )

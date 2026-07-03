@@ -1,5 +1,7 @@
 # CivicPulse
 
+[![CI](https://github.com/snehaprasad11/CivicPulse/actions/workflows/ci.yml/badge.svg)](https://github.com/snehaprasad11/CivicPulse/actions/workflows/ci.yml)
+
 Algorithmic fairness auditing for public resource allocation decisions.
 
 CivicPulse is a full-stack, model-agnostic auditing platform for policy analysts, NGOs, and city teams who need to inspect whether an eligibility or prioritization model treats protected groups differently. It combines custom fairness metric implementations, explainability, mitigation simulation, and a deep adversarial debiasing baseline.
@@ -7,7 +9,7 @@ CivicPulse is a full-stack, model-agnostic auditing platform for policy analysts
 ## What It Does
 
 - Upload or use a sample civic resource-allocation dataset.
-- Upload a trained `.pkl`, `.pickle`, or `.joblib` model through the API.
+- Upload a trained `.pkl`, `.pickle`, or `.joblib` model through the API or dashboard.
 - Audit fairness across protected attributes such as district, age band, and income band.
 - Compute fairness metrics from scratch:
   - Disparate impact ratio
@@ -72,6 +74,14 @@ The included sample dataset is synthetic, but shaped like a housing-assistance p
 For a publishable Kaggle version, replace it with a public dataset such as HMDA mortgage data or an open housing-assistance dataset and keep the same audit pipeline.
 
 Use `scripts/prepare_public_dataset.py` to normalize a public CSV into the columns CivicPulse expects.
+
+You can also fetch and normalize the public OpenML German Credit dataset:
+
+```bash
+python scripts/fetch_openml_credit_dataset.py
+```
+
+This produces `data/public_credit_fairness.csv`, a credit-adjacent public dataset suitable for a reproducible fairness-audit notebook.
 
 ## Demo
 

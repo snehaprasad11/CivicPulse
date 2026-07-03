@@ -35,5 +35,10 @@ Use the API response or exported CSVs to build these visuals.
 
 - `group_metrics_sample.csv`
 - `mitigation_results_sample.csv`
+- `measures.dax`
+- `power_query_group_metrics.m`
+- `power_query_mitigation_results.m`
+- `dashboard_layout.json`
+- `CivicPulse_Dashboard_Build_Guide.md`
 
 In Power BI, import both CSVs and relate them on `protected_attribute`. For live dashboards, use the backend export URLs as web data sources.

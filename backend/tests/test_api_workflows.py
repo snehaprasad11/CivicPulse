@@ -1,4 +1,8 @@
 from fastapi.testclient import TestClient
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from app.main import app
 from app.services.audit_service import load_sample_dataset
@@ -40,6 +44,43 @@ def test_csv_upload_respects_form_fields() -> None:
 
     assert response.status_code == 200
     assert response.json()["protected_attribute"] == "income_band"
+
+
+def test_model_upload_endpoint_scores_serialized_model() -> None:
+    import pickle
+
+    df = load_sample_dataset()
+    x = df.drop(columns=["approved"])
+    y = df["approved"]
+    numeric = list(x.select_dtypes(include="number").columns)
+    categorical = [col for col in x.columns if col not in numeric]
+    model = Pipeline(
+        steps=[
+            (
+                "preprocess",
+                ColumnTransformer(
+                    transformers=[
+                        ("num", StandardScaler(), numeric),
+                        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical),
+                    ]
+                ),
+            ),
+            ("classifier", LogisticRegression(max_iter=1000, solver="liblinear")),
+        ]
+    )
+    model.fit(x, y)
+
+    response = client.post(
+        "/audit/model-upload",
+        files={
+            "dataset": ("sample.csv", df.to_csv(index=False).encode(), "text/csv"),
+            "model_file": ("model.pkl", pickle.dumps(model), "application/octet-stream"),
+        },
+        data={"target": "approved", "protected_attribute": "district"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["dataset_rows"] == 24
 
 
 def test_sample_benchmark_endpoint_compares_core_models() -> None:
