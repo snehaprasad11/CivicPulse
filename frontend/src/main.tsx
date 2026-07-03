@@ -283,7 +283,7 @@ function App() {
           <div className="mb-4 rounded-md border border-red-300 bg-red-50 p-4 text-sm text-red-800">{error}</div>
         )}
 
-        <section className="grid gap-4 md:grid-cols-4">
+        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <MetricTile
             label="Disparate impact"
             value={di === null ? "n/a" : di.toFixed(2)}
@@ -306,13 +306,13 @@ function App() {
           />
         </section>
 
-        <section className="mt-6 grid gap-5 lg:grid-cols-[1.5fr_1fr]">
-          <div className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+        <section className="mt-6 grid min-w-0 gap-5 lg:grid-cols-[1.5fr_1fr]">
+          <div className="min-w-0 rounded-md border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <BarChart3 size={18} />
               <h2 className="text-lg font-semibold">Decision Rates By Group</h2>
             </div>
-            <div className="h-80">
+            <div className="h-72 min-w-0 sm:h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartRows}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -326,15 +326,15 @@ function App() {
               </ResponsiveContainer>
             </div>
             <div className="mt-4 overflow-x-auto">
-              <table className="w-full border-collapse text-sm">
+              <table className="w-full min-w-[360px] border-collapse text-sm">
                 <thead>
                   <tr className="border-b text-left text-slate-500">
                     <th className="py-2">Group</th>
                     <th className="py-2">Applicants</th>
                     <th className="py-2">Selection Rate</th>
-                    <th className="py-2">TPR</th>
-                    <th className="py-2">FPR</th>
-                    <th className="py-2">Accuracy</th>
+                    <th className="hidden py-2 sm:table-cell">TPR</th>
+                    <th className="hidden py-2 sm:table-cell">FPR</th>
+                    <th className="hidden py-2 md:table-cell">Accuracy</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -343,9 +343,9 @@ function App() {
                       <td className="py-2 pr-3 font-medium">{item.group}</td>
                       <td className="py-2">{item.count}</td>
                       <td className="py-2">{percent(item.selection_rate)}</td>
-                      <td className="py-2">{percent(item.true_positive_rate)}</td>
-                      <td className="py-2">{percent(item.false_positive_rate)}</td>
-                      <td className="py-2">{percent(item.accuracy)}</td>
+                      <td className="hidden py-2 sm:table-cell">{percent(item.true_positive_rate)}</td>
+                      <td className="hidden py-2 sm:table-cell">{percent(item.false_positive_rate)}</td>
+                      <td className="hidden py-2 md:table-cell">{percent(item.accuracy)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -353,7 +353,7 @@ function App() {
             </div>
           </div>
 
-          <aside className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+          <aside className="min-w-0 rounded-md border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-3 flex items-center gap-2">
               <AlertTriangle size={18} />
               <h2 className="text-lg font-semibold">Plain-English Finding</h2>
@@ -364,14 +364,14 @@ function App() {
           </aside>
         </section>
 
-        <section className="mt-6 grid gap-5 lg:grid-cols-2">
-          <div className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+        <section className="mt-6 grid min-w-0 gap-5 lg:grid-cols-2">
+          <div className="min-w-0 rounded-md border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <Gauge size={18} />
               <h2 className="text-lg font-semibold">Mitigation Simulator</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-sm">
+              <table className="w-full min-w-[420px] border-collapse text-sm">
                 <thead>
                   <tr className="border-b text-left text-slate-500">
                     <th className="py-2">Strategy</th>
@@ -394,7 +394,7 @@ function App() {
             </div>
           </div>
 
-          <div className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="min-w-0 rounded-md border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <Activity size={18} />
               <h2 className="text-lg font-semibold">Feature Gap Signals</h2>
@@ -403,7 +403,7 @@ function App() {
               {audit?.explanations.map((item) => (
                 <div key={item.feature} className="rounded-md border border-slate-200 p-3">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="font-medium">{item.feature}</p>
+                    <p className="min-w-0 break-words font-medium">{item.feature}</p>
                     <span className="text-sm text-slate-500">{item.impact.toFixed(2)}</span>
                   </div>
                   <p className="mt-1 text-sm text-slate-600">{item.direction}</p>
@@ -413,7 +413,7 @@ function App() {
           </div>
         </section>
 
-        <section className="mt-6 rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+        <section className="mt-6 min-w-0 rounded-md border border-slate-200 bg-white p-4 shadow-sm">
           <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-2">
               <Scale size={18} />
@@ -437,7 +437,7 @@ function App() {
             </div>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
+            <table className="w-full min-w-[620px] border-collapse text-sm">
               <thead>
                 <tr className="border-b text-left text-slate-500">
                   <th className="py-2">Model</th>

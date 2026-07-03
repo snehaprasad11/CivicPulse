@@ -14,8 +14,9 @@ This document separates what is already implemented from what still needs extern
 | Deep ML component | Complete for benchmark/demo | PyTorch adversarial debiasing in `backend/app/ml/adversarial_debiasing.py` |
 | Baseline comparison | Complete | Logistic regression, XGBoost, and PyTorch benchmark in `docs/proofs/sample_benchmark.json` |
 | Frontend dashboard | Complete for local/demo use | `frontend/src/main.tsx`, `docs/assets/dashboard-overview.png` |
+| Responsive layout | Complete for demo/submission | `docs/assets/mobile-dashboard.png`, `docs/assets/tablet-dashboard.png`, `docs/RESPONSIVE_QA.md` |
 | Plain-English AI summary | Complete with Ollama hook and fallback | `backend/app/core/summary.py`, `docs/proofs/proof_summary.json` |
-| Power BI pipeline | Build kit complete; `.pbix` still manual | `powerbi/`, export CSV proof files |
+| Power BI pipeline | Build kit complete; `.pbix` still manual | `powerbi/`, `powerbi/PBIX_STATUS.md`, export CSV proof files |
 | Deployment config | Ready for account setup | `render.yaml`, `frontend/vercel.json`, `docs/DEPLOYMENT.md` |
 | CI | Passing | GitHub Actions badge and latest successful run |
 
@@ -55,5 +56,5 @@ This proves the project is doing the original job: detecting a measurable dispar
 - API proof artifacts are committed and reproducible.
 - Backend tests and frontend production build pass.
 - CI is green on GitHub.
-- The Power BI status is honest: the data pipeline/build kit exists, but the saved `.pbix` must still be created in Power BI Desktop.
+- The Power BI status is honest: the data pipeline/build kit exists, but the saved `.pbix` must still be created in Power BI Desktop and saved to `powerbi/CivicPulse_Fairness_Dashboard.pbix`.
 - The project includes both the technical ML core and the policy-analyst presentation layer.

@@ -6,4 +6,6 @@ These images are committed so the GitHub README shows the working project instea
 - `mitigation-and-benchmark.png`: captured from the live mitigation and explainability sections.
 - `model-benchmark.png`: captured from the live benchmark section comparing logistic regression, XGBoost, and PyTorch adversarial debiasing.
 - `api-docs.png`: captured from the live FastAPI OpenAPI documentation at `/docs`.
+- `mobile-dashboard.png`: captured from a 390px-wide phone viewport.
+- `tablet-dashboard.png`: captured from an 820px-wide tablet viewport.
 - `demo-video-thumbnail.png`: extracted from `demo/civicpulse_demo.mp4`.

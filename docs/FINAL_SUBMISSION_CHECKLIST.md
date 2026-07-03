@@ -19,6 +19,8 @@
 - README screenshots captured from the running app
 - Reproducible API proof artifacts in `docs/proofs/`
 - Project readiness report in `docs/PROJECT_READINESS.md`
+- Phone and tablet responsive screenshots in `docs/assets/`
+- Responsive QA notes in `docs/RESPONSIVE_QA.md`
 
 ## Ready But Requires Account Credentials
 

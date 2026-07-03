@@ -18,6 +18,12 @@ These screenshots are captured from the running CivicPulse application, not mock
 
 ![FastAPI interactive API documentation](docs/assets/api-docs.png)
 
+Responsive proof:
+
+![Phone layout proof](docs/assets/mobile-dashboard.png)
+
+![Tablet layout proof](docs/assets/tablet-dashboard.png)
+
 The repository also includes a generated walkthrough video for a housing-assistance fairness-audit scenario: [demo/civicpulse_demo.mp4](demo/civicpulse_demo.mp4).
 
 ![Demo video thumbnail](docs/assets/demo-video-thumbnail.png)
@@ -32,6 +38,7 @@ The repo includes reproducible proof artifacts generated from the FastAPI app:
 - [Power BI group metrics export](docs/proofs/group_metrics_export.csv)
 - [Power BI mitigation export](docs/proofs/mitigation_results_export.csv)
 - [Project readiness report](docs/PROJECT_READINESS.md)
+- [Responsive QA notes](docs/RESPONSIVE_QA.md)
 
 Regenerate the proof snapshot with:
 
@@ -149,4 +156,4 @@ python scripts/generate_demo_video.py
 
 ## Power BI Status
 
-CivicPulse includes a Power BI build kit with API export endpoints, sample CSVs, DAX measures, Power Query scripts, schema, and a layout guide. The saved `.pbix` file is intentionally not claimed in this repository until it is created in Power BI Desktop from `powerbi/CivicPulse_Dashboard_Build_Guide.md`.
+CivicPulse includes a Power BI build kit with API export endpoints, sample CSVs, DAX measures, Power Query scripts, schema, and a layout guide. The target report file is `powerbi/CivicPulse_Fairness_Dashboard.pbix`; it must be saved from Power BI Desktop using `powerbi/CivicPulse_Dashboard_Build_Guide.md`. See `powerbi/PBIX_STATUS.md` for the current file status and exact save path.
