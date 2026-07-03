@@ -10,9 +10,11 @@ CivicPulse is a full-stack, model-agnostic auditing platform for policy analysts
 
 These screenshots are captured from the running CivicPulse application, not mockups.
 
-![CivicPulse dashboard overview](docs/assets/dashboard-overview.png)
+![CivicPulse dashboard with fairness metrics, group rates, and plain-English finding](docs/assets/dashboard-overview.png)
 
-![Mitigation simulation and model benchmark](docs/assets/mitigation-and-benchmark.png)
+![Mitigation simulator and feature-gap explanation signals](docs/assets/mitigation-and-benchmark.png)
+
+![Model benchmark comparing logistic regression, XGBoost, and PyTorch adversarial debiasing](docs/assets/model-benchmark.png)
 
 ![FastAPI interactive API documentation](docs/assets/api-docs.png)
 

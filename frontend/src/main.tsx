@@ -320,10 +320,36 @@ function App() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="selection" name="Selection rate %" fill="#155e75" />
-                  <Bar dataKey="accuracy" name="Accuracy %" fill="#b45309" />
+                  <Bar dataKey="selection" name="Selection rate %" fill="#155e75" isAnimationActive={false} />
+                  <Bar dataKey="accuracy" name="Accuracy %" fill="#b45309" isAnimationActive={false} />
                 </BarChart>
               </ResponsiveContainer>
+            </div>
+            <div className="mt-4 overflow-x-auto">
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="border-b text-left text-slate-500">
+                    <th className="py-2">Group</th>
+                    <th className="py-2">Applicants</th>
+                    <th className="py-2">Selection Rate</th>
+                    <th className="py-2">TPR</th>
+                    <th className="py-2">FPR</th>
+                    <th className="py-2">Accuracy</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {audit?.metrics.group_metrics.map((item) => (
+                    <tr key={item.group} className="border-b border-slate-100">
+                      <td className="py-2 pr-3 font-medium">{item.group}</td>
+                      <td className="py-2">{item.count}</td>
+                      <td className="py-2">{percent(item.selection_rate)}</td>
+                      <td className="py-2">{percent(item.true_positive_rate)}</td>
+                      <td className="py-2">{percent(item.false_positive_rate)}</td>
+                      <td className="py-2">{percent(item.accuracy)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 
