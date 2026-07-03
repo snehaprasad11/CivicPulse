@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Local env
+.env
+.env.local
+
+# Data artifacts
+*.pkl
+*.joblib
+*.pt
+*.onnx
+
+# OS
+.DS_Store
+Thumbs.db
