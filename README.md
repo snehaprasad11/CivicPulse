@@ -6,6 +6,32 @@ Algorithmic fairness auditing for public resource allocation decisions.
 
 CivicPulse is a full-stack, model-agnostic auditing platform for policy analysts, NGOs, and city teams who need to inspect whether an eligibility or prioritization model treats protected groups differently. It combines custom fairness metric implementations, explainability, mitigation simulation, and a deep adversarial debiasing baseline.
 
+## Project Evidence
+
+These screenshots are captured from the running CivicPulse application, not mockups.
+
+![CivicPulse dashboard overview](docs/assets/dashboard-overview.png)
+
+![Mitigation simulation and model benchmark](docs/assets/mitigation-and-benchmark.png)
+
+![FastAPI interactive API documentation](docs/assets/api-docs.png)
+
+The repository also includes a generated walkthrough video for a housing-assistance fairness-audit scenario: [demo/civicpulse_demo.mp4](demo/civicpulse_demo.mp4).
+
+![Demo video thumbnail](docs/assets/demo-video-thumbnail.png)
+
+## Implemented Scope
+
+- React + Tailwind PWA dashboard connected to the FastAPI backend.
+- FastAPI audit API with sample-data audit, CSV upload, and uploaded-model audit paths.
+- Custom Python fairness metrics implemented in the project core instead of relying on a fairness library wrapper.
+- SHAP/LIME explainability path with deterministic fallbacks for stable demos and tests.
+- PyTorch adversarial debiasing model benchmarked against logistic regression and XGBoost.
+- Ollama-compatible summary hook with a fallback plain-English report generator.
+- Power BI build kit: export endpoints, sample CSVs, DAX measures, Power Query scripts, schema, and report layout guide.
+- Kaggle starter notebook and public OpenML German Credit data preparation script.
+- GitHub Actions CI for backend tests and frontend build checks.
+
 ## What It Does
 
 - Upload or use a sample civic resource-allocation dataset.
@@ -31,7 +57,7 @@ CivicPulse is a full-stack, model-agnostic auditing platform for policy analysts
 backend/      FastAPI service and ML fairness core
 frontend/     React + Tailwind PWA dashboard
 data/         Sample public-resource allocation dataset
-docs/         Architecture, API, and resume/Kaggle notes
+docs/         Architecture, API, deployment, screenshots, and Kaggle notes
 notebooks/    Kaggle notebook starter
 powerbi/      Power BI dashboard schema and exported metrics
 ```
@@ -90,7 +116,3 @@ The `demo/` folder includes a housing-assistance audit scenario, voiceover scrip
 ```bash
 python scripts/generate_demo_video.py
 ```
-
-## Resume Line
-
-Built a model-agnostic algorithmic fairness auditing platform combining custom fairness-metric implementations, SHAP-based explainability, and an adversarial-debiasing neural network, enabling non-technical stakeholders to detect and mitigate bias in public resource-allocation models via an interactive web app.
